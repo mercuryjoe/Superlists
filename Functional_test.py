@@ -1,5 +1,7 @@
 '''
-    测试文档
+功能测试文档
+使用unittest模块扩展功能测试
+使用Edge作用测试的主要浏览器。Firefox与Chrome暂不作测试
 '''
 
 from selenium import webdriver
