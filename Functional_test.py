@@ -4,26 +4,29 @@
 使用Edge作用测试的主要浏览器。Firefox与Chrome暂不作测试
 '''
 
-from selenium import webdriver
 import unittest
+
+from selenium import webdriver
 
 
 class NewVisitorTest(unittest.TestCase):
 
-    def setUP(self):
-        # self.edgedriver_path =
-        self.browser = webdriver.Edge(executable_path=r"C:\MSEdgeDriver\msedgedriver.exe")
+    # MSEdgeDriver 调用
+    driver_edge = webdriver.Edge(executable_path=r"C:\MSEdgeDriver\msedgedriver.exe")
 
     def tearDown(self):
-        self.browser.quit()
+        self.driver_edge.quit()
 
     def test_can_start_a_list_and_retrieve_it_later(self):
         # 伊迪丝听说有一个很酷的在线待办事项应用
         # 她云看了这个应用的首页
-        self.browser.get("http://localhost:8000")
+        # Edge
+        # self.edgedriver_path = r"C:\MSEdgeDriver\msedgedriver.exe"
+        # self.browser_edge = webdriver.Edge(executable_path=self.edgedriver_path)
+        self.driver_edge.get('http://localhost:8000')
 
         # 她注意到网页的标题和头部包含 “To-Do”这个司
-        self.assertIn('To-Do', self.browser.title)
+        self.assertIn('To-Do', self.driver_edge.title)
         self.fail('Finish the test!')
 
         # 应用邀请她输入一个待办事项
