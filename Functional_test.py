@@ -13,8 +13,8 @@ from selenium.webdriver.common.keys import Keys
 
 class NewVisitorTest(unittest.TestCase):
 
-    # MSEdgeDriver 调用
-    driver = webdriver.Edge(executable_path=r"C:\MSEdgeDriver\msedgedriver.exe")
+    e_path = r"C:\MSEdgeDriver\msedgedriver.exe"
+    driver = webdriver.Edge(executable_path=e_path)
 
     def tearDown(self):
         self.driver.quit()
@@ -22,20 +22,17 @@ class NewVisitorTest(unittest.TestCase):
     def test_can_start_a_list_and_retrieve_it_later(self):
         # 伊迪丝听说有一个很酷的在线待办事项应用
         # 她云看了这个应用的首页
-        # Edge
-        # self.edgedriver_path = r"C:\MSEdgeDriver\msedgedriver.exe"
-        # self.browser_edge = webdriver.Edge(executable_path=self.edgedriver_path)
         self.driver.get('http://localhost:8000')
 
         # 她注意到网页的标题和头部包含 “To-Do”这个司
         self.assertIn('To-Do', self.driver.title)
-        header_text = self.driver.find_elements_by_tag_name('h1').text
+        header_text = self.driver.find_element_by_tag_name('h1').text
         self.assertIn('To-Do', header_text)
 
         # 应用邀请她输入一个待办事项
         inputbox = self.driver.find_element_by_id('id_new_item')
         self.assertEqual(
-            inputbox.get.attribute('placeholder'),
+            inputbox.get_attribute('placeholder'),
             'Enter a to-do item'
         )
         # 她在一个文本框中输入了 “Buy peacock feathers ” (购买孔雀羽毛)
@@ -45,12 +42,13 @@ class NewVisitorTest(unittest.TestCase):
         # 她按回车键后、页面更新了
         # 待办事项表格中显示了 “1: Buy peacock feathers”
         inputbox.send_keys(Keys.ENTER)
-        time.sleep(2)
+        time.sleep(1)
 
         table = self.driver.find_element_by_id('id_list_table')
         rows = table.find_elements_by_tag_name('tr')
         self.assertTrue(
-            any(row.text == '1: Buy peacock feathers' for row in rows)
+            any(row.text == '1: Buy peacock feathers' for row in rows),
+            "New to-do item did not appear in table"
         )
 
         # 页面中又显示了一个文本框，可以输入其他的待办事项
