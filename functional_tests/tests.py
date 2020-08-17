@@ -1,17 +1,20 @@
 '''
 功能测试文档
 使用unittest模块扩展功能测试
-使用Edge作用测试的主要浏览器。Firefox与Chrome暂不作测试
+使用Edge作用测试的主要浏览器。
 '''
 
 import time
-import unittest
+# import unittest
+
+from django.test import LiveServerTestCase
 
 from selenium import webdriver
 from selenium.webdriver.common.keys import Keys
 
 
-class NewVisitorTest(unittest.TestCase):
+# class NewVisitorTest(unittest.TestCase):
+class NewVisitorTest(LiveServerTestCase):
 
     e_path = r"C:\MSEdgeDriver\msedgedriver.exe"
     driver = webdriver.Edge(executable_path=e_path)
@@ -27,7 +30,8 @@ class NewVisitorTest(unittest.TestCase):
     def test_can_start_a_list_and_retrieve_it_later(self):
         # 伊迪丝听说有一个很酷的在线待办事项应用
         # 她云看了这个应用的首页
-        self.driver.get('http://mydjango.com')
+        # self.driver.get('http://mydjango.com')
+        self.driver.get(self.live_server_url)
 
         # 她注意到网页的标题和头部包含 “To-Do”这个司
         self.assertIn('To-Do', self.driver.title)
@@ -74,5 +78,5 @@ class NewVisitorTest(unittest.TestCase):
         # 她很满意，去睡觉了
 
 
-if __name__ == '__main__':
-    unittest.main(warnings='ignore')
+# if __name__ == '__main__':
+#    unittest.main(warnings='ignore')
